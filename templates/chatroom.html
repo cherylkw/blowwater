@@ -1,0 +1,32 @@
+{% extends "layout.html" %}
+
+
+
+{% block body %}
+<ul class="pagination justify-content-end">
+    <li class="nav-item">
+       <h6><a class="nav-link" href="{{ url_for('chatroomlist') }}">Browse Chatroom List</a></h6>
+    </li>
+    <li class="nav-item">
+        <h6><a class="nav-link " href="{{ url_for('logout') }}">Logout</a></h6>
+    </li>
+</ul>
+<br>
+<h5>Blow Water > Hi {{ chatname }} ! You are in chatroom : {{ chatroom_name }}</h5>
+<hr class="my-4">
+<br>
+
+<div class="font-weight-normal text-right" id="messages"> </div>
+
+<form id= "input_form" action="javascript:void(0);" class="mt-2" method="post">
+    <div class="input-group mb-3">
+        <input type="text" id="input_msg" class="form-control text-right" placeholder="Message Here" aria-label="Recipient's username" aria-describedby="submit">
+        <div class="input-group-append">
+          <button class="btn btn-outline-secondary" type="submit" id="submit">Send</button>
+        </div>
+    </div>
+</form>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.1.1/socket.io.js" integrity="sha256-ji09tECORKvr8xB9iCl8DJ8iNMLriDchC1+p+yt1hSs=" crossorigin="anonymous"></script>
+    <script src="{{ url_for('static', filename='chatroom.js') }}"></script>
+{% endblock %}

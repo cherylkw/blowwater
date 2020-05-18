@@ -1,0 +1,63 @@
+{% extends "layout.html" %}
+
+{% block body %}
+<br>
+<div class="container">
+  <div class="row">
+    <div class="col-sm-4 p-3 mb-2 bg-light text-dark">
+      <h5>Blow Water > Hi {{ chatname }} !</h5>
+      <hr>
+      <br>
+      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+          Create Your Chatroom
+      </button>
+      <br><br>
+      <a class="btn btn-primary" href="{{ url_for('logout') }}">Logout</a>
+    </div>
+    <div class="col-sm-8 p-3 mb-2 bg-white text-dark">
+      {% if chatroomlists %}
+      <h5>Active Chatrooms :</h5>
+      <hr>
+      <ul id="chatrooms" class="nav flex-column">
+        {% for chat in chatroomlists %}
+            <li class="nav-item">
+                <a href="{{ url_for('chatroom', chatid=loop.index)}}" class="nav-link" style="font-size:18px"> {{ chat }} </a>
+            </li>
+        {% endfor %}
+      </ul>
+      {% else %}
+        <br><br>
+        <h5 align="center">No Chatroom Available</h5>
+      {% endif %}
+    </div>
+  </div>
+</div>  
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Blow Water</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form class="form-signin" action="{{ url_for('chatroom', chatid=chatroomlists | length +1)}}" method="post">
+            <div class="form-group mt-3">
+                <label for="chatroom_name" class="col-form-label">Create Your Chatroom</label>
+                <input type="text" id="chatroom_name" class="form-control" placeholder="Chatroom Name" required name="chatroom_name">
+            </div>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-primary" id="form_submit">Submit</button>
+      </div>
+    </form>
+    </div>
+  </div>
+</div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.1.1/socket.io.js" integrity="sha256-ji09tECORKvr8xB9iCl8DJ8iNMLriDchC1+p+yt1hSs=" crossorigin="anonymous"></script>
+    <script src="{{ url_for('static', filename='chatroomlist.js') }}"></script>
+{% endblock %}
